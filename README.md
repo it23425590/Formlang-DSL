@@ -103,7 +103,7 @@ make
   
 
   <h2>🔗 Demo</h2>
-  <p>👉 <a href="https://mysliit-my.sharepoint.com/:f:/g/personal/it23425590_my_sliit_lk/Eut73oC7IbdEu66gFssmJpcBCicm92SYGScnj2BgPkSGlg?e=zQkGMY" target="_blank">View Demo Files</a></p>
+  <p>👉 <a href="https://www.youtube.com/watch?v=TE871Ws4tmw" target="_blank">View Demo Files</a></p>
 
   <h2>📄 License</h2>
   <p>This project is part of the SE2062 – Programming Paradigms module at SLIIT. You may modify or extend it for academic or non-commercial purposes.</p>
