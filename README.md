@@ -3,38 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FormLang++ – DSL for HTML Form Generation</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-      background-color: #f8f9fa;
-    }
-    h1, h2, h3 {
-      color: #2c3e50;
-    }
-    pre {
-      background: #eef1f4;
-      padding: 10px;
-      border-radius: 5px;
-      overflow-x: auto;
-    }
-    code {
-      font-family: monospace;
-      background: #eef;
-      padding: 2px 4px;
-      border-radius: 3px;
-    }
-    a {
-      color: #2980b9;
-    }
-    ul {
-      list-style-type: square;
-    }
-  </style>
+  
+    
+
 </head>
 <body>
 
@@ -44,12 +15,12 @@
 
   <h2>🚀 Features</h2>
   <ul>
-    <li>✅ <strong>High-Level Syntax</strong> for common HTML form fields</li>
-    <li>📐 <strong>EBNF Grammar</strong> for metadata, sections, attributes, and validations</li>
-    <li>🧪 <strong>Built-In Field Validations</strong> like <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern</code></li>
-    <li>🔀 <strong>Conditional Validation Support</strong></li>
-    <li>📄 <strong>Generates Valid HTML5</strong> with JavaScript enhancements</li>
-    <li>🔧 <strong>Easily Extensible</strong> for new field types or validation rules</li>
+    <li><strong>High-Level Syntax</strong> for common HTML form fields</li>
+    <li><strong>EBNF Grammar</strong> for metadata, sections, attributes, and validations</li>
+    <li><strong>Built-In Field Validations</strong> like <code>required</code>, <code>min</code>, <code>max</code>, <code>pattern</code></li>
+    <li><strong>Conditional Validation Support</strong></li>
+    <li><strong>Generates Valid HTML5</strong> with JavaScript enhancements</li>
+    <li><strong>Easily Extensible</strong> for new field types or validation rules</li>
   </ul>
 
   <h2>📘 Language Overview</h2>
@@ -129,59 +100,7 @@ make
 
   <p>The output HTML will be printed to the terminal or saved to a file, depending on your implementation.</p>
 
-  <h2>📐 Grammar Summary (EBNF)</h2>
-  <pre><code>form              = "form", identifier, "{", meta_declarations?, section_declarations, "}";
-meta_declarations = meta_declaration*;
-meta_declaration  = "meta", identifier, "=", string_literal, ";";
-
-section_declarations = section_declaration+;
-section_declaration  = "section", string_literal, "{", field_declarations, "}";
-
-field_declarations = field_declaration+;
-field_declaration  = "field", identifier, ":", field_type, field_attributes?, ";";
-
-field_type = "text" | "textarea" | "number" | "email" | "date"
-           | "checkbox" | "dropdown" | "radio" | "password" | "file";
-
-field_attributes = field_attribute+;
-field_attribute  = required_attr | pattern_attr | min_attr | max_attr |
-                   default_attr | rows_attr | cols_attr | accept_attr | options_attr;
-
-required_attr = "required";
-pattern_attr  = "pattern", "=", string_literal;
-min_attr      = "min", "=", number;
-max_attr      = "max", "=", number;
-default_attr  = "default", "=", (string_literal | boolean);
-rows_attr     = "rows", "=", number;
-cols_attr     = "cols", "=", number;
-accept_attr   = "accept", "=", string_literal;
-options_attr  = "[", string_literal, { ",", string_literal }, "]";</code></pre>
-
-  <h2>📌 Semantic Constraints</h2>
-  <ul>
-    <li>Field identifiers must be unique within a form.</li>
-    <li>Section names should be unique.</li>
-    <li>Attribute compatibility:
-      <ul>
-        <li><code>min</code>, <code>max</code> → only for <code>number</code></li>
-        <li><code>pattern</code> → for <code>text</code>, <code>password</code></li>
-        <li><code>rows</code>, <code>cols</code> → for <code>textarea</code></li>
-        <li><code>accept</code> → for <code>file</code></li>
-        <li>Options list → only for <code>radio</code>, <code>dropdown</code></li>
-      </ul>
-    </li>
-  </ul>
-
-  <h2>📂 Directory Structure</h2>
-  <pre><code>formlangplusplus/
-├── Makefile
-├── lexer.l           # Flex lexer definition
-├── parser.y          # Bison grammar file
-├── main.c            # Entry point
-├── form_test.form    # Sample DSL input
-├── output.html       # Generated output
-└── README.html       # This file
-</code></pre>
+  
 
   <h2>🔗 Demo</h2>
   <p>👉 <a href="https://mysliit-my.sharepoint.com/:f:/g/personal/it23425590_my_sliit_lk/Eut73oC7IbdEu66gFssmJpcBCicm92SYGScnj2BgPkSGlg?e=zQkGMY" target="_blank">View Demo Files</a></p>
