@@ -1,0 +1,15 @@
+form SurveyForm {
+  meta author = "SE2062 Team";
+  
+  section "Customer Information" {
+    field name: text required;
+    field email: email;
+    field customerType: dropdown ["New", "Returning", "Regular"];
+  }
+  
+  section "Product Feedback" {
+    field productRating: radio ["Excellent", "Good", "Average", "Poor", "Very Poor"];
+    field usability: radio ["Very Easy", "Easy", "Neutral", "Difficult", "Very Difficult"];
+    field comments: textarea rows=4 cols=50;
+  }
+}

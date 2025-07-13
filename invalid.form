@@ -1,0 +1,9 @@
+
+form InvalidForm {
+    section "Missing Closing Brace" {
+        field name: text required;
+    
+    section "Invalid Field" {
+        field email: invalid_type;
+    }
+}

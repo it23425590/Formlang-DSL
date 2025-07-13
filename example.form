@@ -1,0 +1,28 @@
+form Registration {
+  meta author = "SE2062 Assignment";
+  
+  section "Personal Details" {
+    field fullName: text required;
+    field email: email required;
+    field age: number min=18 max=99;
+    field birthdate: date required;
+  }
+  
+  section "Contact Information" {
+    field address: textarea rows=3 cols=40;
+    field phone: text pattern="[0-9]{10}";
+  }
+  
+  section "Account Information" {
+    field username: text required pattern="[a-zA-Z0-9_]{5,20}";
+    field password: password required;
+    field confirmPassword: password required;
+  }
+  
+  section "Preferences" {
+    field gender: radio ["Male", "Female", "Other"];
+    field interests: dropdown ["Sports", "Music", "Art", "Technology", "Travel"];
+    field newsletter: checkbox default=true;
+    field profilePic: file accept="image/*";
+  }
+}

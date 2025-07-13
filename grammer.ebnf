@@ -1,0 +1,38 @@
+form             = "form", identifier, "{", meta_declarations?, section_declarations, "}";
+
+meta_declarations = meta_declaration*;
+meta_declaration = "meta", identifier, "=", string_literal, ";";
+
+section_declarations = section_declaration+;
+section_declaration = "section", string_literal, "{", field_declarations, "}";
+
+field_declarations = field_declaration+;
+field_declaration = "field", identifier, ":", field_type, field_attributes?, ";";
+
+field_type       = "text" | "textarea" | "number" | "email" | "date" | 
+                   "checkbox" | "dropdown" | "radio" | "password" | "file";
+
+field_attributes = field_attribute+;
+field_attribute  = required_attr | pattern_attr | min_attr | max_attr | 
+                   default_attr | rows_attr | cols_attr | accept_attr | options_attr;
+
+required_attr    = "required";
+pattern_attr     = "pattern", "=", string_literal;
+min_attr         = "min", "=", number;
+max_attr         = "max", "=", number;
+default_attr     = "default", "=", (string_literal | boolean);
+rows_attr        = "rows", "=", number;
+cols_attr        = "cols", "=", number;
+accept_attr      = "accept", "=", string_literal;
+options_attr     = "[", option_list, "]";
+
+option_list      = string_literal, { ",", string_literal };
+
+identifier       = letter, { letter | digit | "_" };
+string_literal   = '"', { character }, '"';
+number           = digit, { digit };
+boolean          = "true" | "false";
+
+letter           = "a" | "b" | ... | "z" | "A" | "B" | ... | "Z";
+digit            = "0" | "1" | ... | "9";
+character        = any printable character except '"';

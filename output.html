@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="author" content="SE2062 Assignment" />
+  <title>Registration Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2e86c1; --primary-hover: #2574a9; --secondary: #2e86c1;
+      --success: #38b000; --error: #d90429; --text: #333; --text-light: #666;
+      --border: #ddd; --bg: #f8f9fa; --card: #fff; --section: #f8faff;
+      --shadow: 0 10px 30px rgba(0,0,0,0.08); --radius: 8px; --transition: all 0.3s ease;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 40px 20px; }
+    form { background: var(--card); max-width: 800px; margin: 0 auto 60px; padding: 40px; border-radius: var(--radius); box-shadow: var(--shadow); position: relative; overflow: hidden; }
+    form::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+    h1 { color: var(--primary); margin: 0 0 30px; font-weight: 700; font-size: 32px; text-align: center; position: relative; padding-bottom: 15px; }
+    h1::after { content: ""; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: var(--primary); border-radius: 2px; }
+    .section { margin-bottom: 35px; padding: 25px; border-radius: var(--radius); background: var(--section); border: 1px solid var(--border); transition: var(--transition); animation: fadeIn 0.5s ease forwards; }
+    .section:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    .section:nth-child(2) { animation-delay: 0.1s; }
+    .section:nth-child(3) { animation-delay: 0.2s; }
+    h2 { color: var(--secondary); margin: 0 0 20px; font-size: 22px; font-weight: 600; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+    .field { margin-bottom: 24px; }
+    .field:last-child { margin-bottom: 0; }
+    label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text); font-size: 15px; }
+    input[type="text"], input[type="email"], input[type="number"], input[type="password"], input[type="date"],
+    select, textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border); border-radius: var(--radius);
+      font-size: 15px; color: var(--text); background: #fff; transition: var(--transition); box-sizing: border-box; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(67,97,238,0.15); }
+    input::placeholder, textarea::placeholder { color: #aaa; }
+    input[type="file"] { padding: 10px; background: #f5f7ff; border: 1px dashed var(--primary); border-radius: var(--radius); cursor: pointer; }
+    input[type="file"]:hover { background: #eef1ff; }
+    .radio-group, .checkbox-group { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+    .radio-option { display: flex; align-items: center; cursor: pointer; }
+    input[type="radio"], input[type="checkbox"] { accent-color: var(--primary); width: 18px; height: 18px; margin-right: 8px; cursor: pointer; }
+    button { background: linear-gradient(to right, #0062cc, #0097b2); color: white; padding: 14px 28px; border: none;
+      border-radius: var(--radius); cursor: pointer; font-size: 16px; font-weight: 600; letter-spacing: 0.5px;
+      transition: var(--transition); display: block; margin: 40px auto 0; box-shadow: 0 4px 12px rgba(0,98,204,0.3); }
+    button:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,98,204,0.4); }
+    button:active { transform: translateY(0); }
+    /* Required field indicator */
+    label[for="fullName"]::after, label[for="email"]::after, label[for="username"]::after,
+    label[for="password"]::after, label[for="birthdate"]::after { content: " *"; color: var(--error); }
+    /* Validation styling */
+    input:invalid:not(:placeholder-shown) { border-color: var(--error); }
+    input:valid:not(:placeholder-shown) { border-color: var(--success); }
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      form { padding: 30px 20px; }
+      .section { padding: 20px 15px; }
+      .radio-group { flex-direction: column; gap: 12px; }
+    }
+    /* Custom checkbox styling */
+    .checkbox-field { display: flex; align-items: center; }
+    .checkbox-field label { margin-bottom: 0; cursor: pointer; }
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    /* Additional professional touches */
+    textarea { resize: vertical; min-height: 100px; }
+    select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat; background-position: right 12px center; background-size: 16px; padding-right: 40px; }
+    /* Focus visible for accessibility */
+    :focus-visible { outline: 3px solid rgba(67,97,238,0.5); outline-offset: 2px; }
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #4361ee; --primary-hover: #5a72f0; --secondary: #9d4edd; --text: #e1e1e1;
+        --text-light: #b0b0b0; --border: #444; --bg: #121212; --card: #1e1e1e; --section: #252525;
+      }
+      input[type="text"], input[type="email"], input[type="number"], input[type="password"],
+      select, textarea { background: #2a2a2a; color: var(--text); }
+      input[type="file"] { background: #2a2a2a; }
+      input::placeholder, textarea::placeholder { color: #777; }
+      select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e1e1e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
+    }
+  </style>
+</head>
+<body>
+  <form id="RegistrationForm" method="POST" enctype="multipart/form-data" aria-label="User Registration Form">
+    <h1>Registration Form</h1>
+
+    <section class="section" aria-labelledby="Registration-section-1">
+      <h2 id="Registration-section-1">Personal Details</h2>
+
+      <div class="field">
+        <label for="fullName">fullName</label>
+        <input type="text" id="fullName" name="fullName" required placeholder="Enter your fullName" />
+      </div>
+
+      <div class="field">
+        <label for="email">email</label>
+        <input type="email" id="email" name="email" required placeholder="your.email@gmail.com" />
+      </div>
+
+      <div class="field">
+        <label for="age">age</label>
+        <input type="number" id="age" name="age" min="18" max="99" placeholder="Your age (18-99)" />
+      </div>
+
+      <div class="field">
+        <label for="birthdate">birthdate</label>
+        <input type="date" id="birthdate" name="birthdate" required />
+      </div>
+
+    </section>
+
+    <section class="section" aria-labelledby="Registration-section-2">
+      <h2 id="Registration-section-2">Contact Information</h2>
+
+      <div class="field">
+        <label for="address">address</label>
+        <textarea id="address" name="address" rows="3" cols="40" placeholder="Enter your address"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="phone">phone</label>
+        <input type="text" id="phone" name="phone" pattern="[0-9]{10}" title="Please enter a 10-digit phone number like 1234567890" placeholder="10-digit phone number (e.g., 1234567890)" />
+      </div>
+
+    </section>
+
+    <section class="section" aria-labelledby="Registration-section-3">
+      <h2 id="Registration-section-3">Account Information</h2>
+
+      <div class="field">
+        <label for="username">username</label>
+        <input type="text" id="username" name="username" required pattern="[a-zA-Z0-9_]{5,20}" title="Username must be 5-20 characters long and can only contain letters, numbers, and underscores" placeholder="5-20 characters: letters, numbers, underscores only" />
+      </div>
+
+      <div class="field">
+        <label for="password">password</label>
+        <input type="password" id="password" name="password" required placeholder="Enter your password" />
+      </div>
+
+      <div class="field">
+        <label for="confirmPassword">confirmPassword</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Enter your confirmPassword" />
+      </div>
+
+    </section>
+
+    <section class="section" aria-labelledby="Registration-section-4">
+      <h2 id="Registration-section-4">Preferences</h2>
+
+      <div class="field">
+        <label>gender</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="gender" value="Male" /> Male</label>
+          <label class="radio-option"><input type="radio" name="gender" value="Female" /> Female</label>
+          <label class="radio-option"><input type="radio" name="gender" value="Other" /> Other</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="interests">interests</label>
+        <select id="interests" name="interests">
+          <option value="" disabled selected>Select your interests</option>
+          <option value="Sports">Sports</option>
+          <option value="Music">Music</option>
+          <option value="Art">Art</option>
+          <option value="Technology">Technology</option>
+          <option value="Travel">Travel</option>
+        </select>
+      </div>
+
+      <div class="field checkbox-field">
+        <input type="checkbox" id="newsletter" name="newsletter" checked />
+        <label for="newsletter">newsletter</label>
+      </div>
+
+      <div class="field">
+        <label for="profilePic">profilePic</label>
+        <input type="file" id="profilePic" name="profilePic" accept="image/*" />
+      </div>
+
+    </section>
+
+    <button type="submit">Create Account</button>
+  </form>
+
+  <script>
+    document.getElementById('RegistrationForm').addEventListener('submit', function(event) {
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      if (password && confirmPassword && password.value !== confirmPassword.value) {
+        event.preventDefault();
+        alert('Passwords do not match!');
+      } else if (this.checkValidity()) {
+        alert('Form submitted successfully!');
+      }
+    });
+  </script>
+</body>
+</html>
