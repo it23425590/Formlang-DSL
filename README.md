@@ -1,172 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+FormLang++ – A Domain-Specific Language for HTML Form Generation
+FormLang++ is a domain-specific language (DSL) designed to simplify and automate the process of generating HTML forms using a high-level, declarative syntax. Instead of manually writing repetitive and error-prone HTML code, developers can define forms in a structured and readable format, which is then compiled into clean HTML and JavaScript with built-in validation logic.
 
-</head>
-<body>
+🚀 Features
+✅ High-Level Syntax for common HTML form fields
 
-  <h1>FormLang++ – A Domain-Specific Language for HTML Form Generation</h1>
+📐 EBNF Grammar for metadata, sections, attributes, and validations
 
-  <p><strong>FormLang++</strong> is a domain-specific language (DSL) designed to simplify and automate the process of generating HTML forms through a high-level, human-readable syntax. Instead of manually writing repetitive and error-prone HTML code, developers can define forms declaratively using FormLang++, which is then parsed and compiled into clean, valid HTML output with built-in validation.</p>
+🧪 Built-In Field Validations like required, min, max, pattern
 
-  <p><em>🔧 Developed using <strong>Flex (Lex)</strong> and <strong>Bison (Yacc)</strong> as part of the <strong>Programming Paradigms</strong> coursework at <strong>SLIIT</strong>.</em></p>
+🔀 Conditional Validation Support
 
-  <hr>
+📄 Generates Valid HTML5 with JavaScript enhancements
 
-  <div class="section">
-    <h2>🚀 Features</h2>
-    <ul>
-      <li>High-level form syntax for common HTML fields</li>
-      <li>EBNF grammar support for sections, attributes, and validations</li>
-      <li>Built-in field validations and error messages</li>
-      <li>Conditional validation using <code>if</code> rules</li>
-      <li>Generates valid, clean HTML code with JavaScript</li>
-      <li>Extensible language design</li>
-    </ul>
-  </div>
+🔧 Easily Extensible for new field types or validation rules
 
-  <div class="section">
-    <h2>🧠 Grammar Design (EBNF)</h2>
-    <pre><code>form         ::= 'form' ID '{' meta_block? section+ validate_block? '}'
-section      ::= 'section' ID '{' field+ '}'
-field        ::= 'field' ID ':' field_type attr_list? ';'
-field_type   ::= 'text' | 'number' | 'email' | ...
-validate     ::= 'validate' '{' condition+ '}'
-condition    ::= 'if' expr '{' 'error' STRING ';' '}'</code></pre>
+📘 Language Overview
+✅ Basic Structure
+fdl
+Copy
+Edit
+form FormName {
+  meta author = "Your Name";
 
-    <p><strong>Example:</strong></p>
-    <pre><code>form contact {
-  section personal {
-    field name: text required;
-    field age: number min=18 max=99;
+  section "Section Title" {
+    field fieldName: fieldType [attributes];
   }
+}
+✅ Supported Field Types
+text, textarea, number, email, date
 
-  validate {
-    if age &lt; 18 {
-      error "You must be at least 18.";
-    }
-  }
-}</code></pre>
-  </div>
+checkbox, radio, dropdown, password, file
 
-  <div class="section">
-    <h2>🔧 Lex & Yacc Implementation</h2>
-    <p><strong>Lex (lexer.l)</strong> tokenizes keywords, field types, operators, strings, numbers, and identifiers.</p>
-    <p><strong>Yacc (parser.y)</strong> defines the grammar structure and emits HTML via <code>fprintf()</code> during parsing.</p>
+✅ Supported Field Attributes
+required
 
-    <pre><code>field:
-  FIELD ID ':' TEXT attr_list ';' {
-    fprintf(output, "&lt;label&gt;%s: &lt;input type='text' name='%s' %s&gt;&lt;/label&gt;&lt;br&gt;\n", $2, $2, $4);
-  }</code></pre>
+pattern="regex"
 
-    <p>Error handling:</p>
-    <pre><code>error {
-  fprintf(stderr, "Syntax error near: %s\n", yytext);
-  YYABORT;
-}</code></pre>
-  </div>
+min=number, max=number
 
-  <div class="section">
-    <h2>🖥️ HTML Code Generation</h2>
-    <pre><code>field age: number min=18 max=99;</code></pre>
+default=value
 
-    <p>Generates:</p>
-    <pre><code>&lt;label&gt;Age: &lt;input type="number" name="age" min="18" max="99"&gt;&lt;/label&gt;&lt;br&gt;</code></pre>
-  </div>
+rows=number, cols=number
 
-  <div class="section">
-    <h2>📂 Project Structure</h2>
-    <pre><code>FormLang++
-├── lexer.l              # Lex file
-├── parser.y             # Yacc file
-├── form_generator.c     # HTML code generation
-├── form_test.form       # DSL example input
-├── Makefile             # Build script
-└── README.md            # Documentation</code></pre>
-  </div>
+accept="mime/type"
 
-  <div class="section">
-    <h2>📄 Sample FormLang++ Code</h2>
-    <pre><code>form "Contact Us" {
-  section basic {
-    field name: text required;
+[ "option1", "option2", ... ] for radio/dropdown
+
+📜 Example
+🔐 Registration Form
+fdl
+Copy
+Edit
+form Registration {
+  meta author = "SE2062 Team";
+
+  section "Personal Details" {
+    field fullName: text required;
     field email: email required;
-    field message: text required;
+    field age: number min=18 max=99;
+    field birthdate: date required;
   }
 
-  validate {
-    if age &lt; 18 {
-      error "You must be at least 18.";
-    }
+  section "Account" {
+    field username: text required pattern="[a-zA-Z0-9_]{5,20}";
+    field password: password required;
+    field confirmPassword: password required;
   }
-}</code></pre>
-  </div>
 
-  <div class="section">
-    <h2>➡️ Generated HTML Output</h2>
-    <pre><code>&lt;form&gt;
-  &lt;label&gt;Name: &lt;input type="text" name="name" required&gt;&lt;/label&gt;&lt;br&gt;
-  &lt;label&gt;Email: &lt;input type="email" name="email" required&gt;&lt;/label&gt;&lt;br&gt;
-  &lt;label&gt;Message: &lt;input type="text" name="message" required&gt;&lt;/label&gt;&lt;br&gt;
-  &lt;button type="submit"&gt;Submit&lt;/button&gt;
-&lt;/form&gt;
-
-&lt;script&gt;
-  function validateForm() {
-    const age = document.forms[0]["age"].value;
-    if (age &lt; 18) {
-      alert("You must be at least 18.");
-      return false;
-    }
-    return true;
+  section "Preferences" {
+    field gender: radio ["Male", "Female", "Other"];
+    field newsletter: checkbox default=true;
+    field profilePic: file accept="image/*";
   }
-&lt;/script&gt;</code></pre>
-  </div>
+}
+⚙️ How to Build and Run
+🧾 Prerequisites
+flex (for lexical analysis)
 
-  <div class="section">
-    <h2>🧪 How to Build and Run</h2>
-    <ol>
-      <li>Clone the Repository</li>
-      <pre><code>git clone https://github.com/yourusername/formlangplusplus.git
-cd formlangplusplus</code></pre>
+bison (for parsing)
 
-      <li>Build the Compiler</li>
-      <pre><code>make</code></pre>
+gcc or compatible C compiler
 
-      <li>Run the DSL Parser</li>
-      <pre><code>./formlang form_test.form</code></pre>
+make
 
-      <li>Check Output</li>
-      <p>The generated HTML will be printed in the terminal or saved based on implementation.</p>
-    </ol>
-  </div>
+🔨 Build Instructions
+bash
+Copy
+Edit
+# Clone the Repository
+git clone https://github.com/yourusername/formlangplusplus.git
+cd formlangplusplus
 
-  <div class="section">
-    <h2>🛠 Technologies Used</h2>
-    <ul>
-      <li>Flex (Lex) – Lexical analysis</li>
-      <li>Bison (Yacc) – Grammar parsing</li>
-      <li>C – Code generation backend</li>
-      <li>Makefile – Build automation</li>
-    </ul>
-  </div>
+# Build the Compiler
+make
 
-  <div class="section">
-    <h2>📚 Learning Outcomes</h2>
-    <ul>
-      <li>DSL design using EBNF</li>
-      <li>Compiler construction with Lex and Yacc</li>
-      <li>Semantic validation and HTML code generation</li>
-      <li>Error handling and modular language design</li>
-    </ul>
-  </div>
+# Run the Parser on a Sample Form Definition
+./formlang form_test.form
+The output HTML will be printed to the terminal or saved to a file, depending on your implementation.
 
-  <div class="section">
-    <h2>📜 License</h2>
-    <p>This project was developed as part of an academic module at SLIIT. You are free to fork or use it for educational purposes.</p>
-  </div>
+📐 Grammar Summary (EBNF)
+ebnf
+Copy
+Edit
+form              = "form", identifier, "{", meta_declarations?, section_declarations, "}";
+meta_declarations = meta_declaration*;
+meta_declaration  = "meta", identifier, "=", string_literal, ";";
 
-</body>
-</html>
+section_declarations = section_declaration+;
+section_declaration  = "section", string_literal, "{", field_declarations, "}";
+
+field_declarations = field_declaration+;
+field_declaration  = "field", identifier, ":", field_type, field_attributes?, ";";
+
+field_type = "text" | "textarea" | "number" | "email" | "date"
+           | "checkbox" | "dropdown" | "radio" | "password" | "file";
+
+field_attributes = field_attribute+;
+field_attribute  = required_attr | pattern_attr | min_attr | max_attr |
+                   default_attr | rows_attr | cols_attr | accept_attr | options_attr;
+
+required_attr = "required";
+pattern_attr  = "pattern", "=", string_literal;
+min_attr      = "min", "=", number;
+max_attr      = "max", "=", number;
+default_attr  = "default", "=", (string_literal | boolean);
+rows_attr     = "rows", "=", number;
+cols_attr     = "cols", "=", number;
+accept_attr   = "accept", "=", string_literal;
+options_attr  = "[", string_literal, { ",", string_literal }, "]";
+📌 Semantic Constraints
+Field identifiers must be unique within a form.
+
+Section names should be unique.
+
+Attribute compatibility:
+
+min, max → only for number
+
+pattern → for text, password
+
+rows, cols → for textarea
+
+accept → for file
+
+Options list → only for radio, dropdown
+
+📂 Directory Structure
+
+formlangplusplus/
+├── Makefile
+├── lexer.l           # Flex lexer definition
+├── parser.y          # Bison grammar file
+├── main.c            # Entry point
+├── form_test.form    # Sample DSL input
+├── output.html       # Generated output
+└── README.md         # This file
+🔗 Demo
+👉 View Demo Files
+
+📄 License
+This project is part of the SE2062 – Programming Paradigms module at SLIIT. You may modify or extend it for academic or non-commercial purposes.
